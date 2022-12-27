@@ -10,6 +10,7 @@
 
 
 <body>
+    {% if request.user.is_authenticated %}
     <div class="col-8 m-auto pt-6 pb-6"> 
         <div class=" bg-dark p-2 text-white bg-opacity-75">  
             <h1>Lista de Cursos</h1>  
@@ -38,12 +39,20 @@
 
                 </tbody>
             </table>
+            
+            <a href="/logouts/" class="btn btn-primary">Logout</a>
 
-            <a href="/login" class="btn btn-primary">Voltar</a>
             <a href="/form" class="btn btn-primary">Novo Curso</a>
         </div>
     </div> 
     {% load static %}
     <script src="{% static 'javascript.js' %}"></script>
+        {% else %}
+        <div class="text-center">
+            <h1>Você não tem acesso a essa área!</h1>
+        </div>
+        {% endif %}
+           
+
 </body>
 </html>

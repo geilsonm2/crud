@@ -15,19 +15,27 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from app.views import cadastro, login, cursos, form, create, edit, update, delete
+from app.views import cursos, form, createCursos, edit, update, delete, home, create,store , painel, dologin, dashboard, logouts, changePassword
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', cadastro, name='cadastro'),
-    path('login/', login, name='login'), 
     path('cursos/', cursos, name='cursos'),
     path('form/', form, name='form'),
-    path('create/', create, name='create'),
+    path('createCursos/', createCursos, name='createCursos'),
     # As duas rotas estão recebendo parâmetro de PK
     path('edit/<int:pk>/', edit, name='edit'),
     path('update/<int:pk>/', update, name='update'),
     path('delete/<int:pk>/', delete, name='delete'),
+
+    path('', home),
+    path('create/', create, name='create'),
+    path('store/', store),
+    path('painel/', painel, name='painel'),
+    path('dologin/', dologin),
+    path('dashboard/', dashboard),
+    path('logouts/', logouts),
+    path('changePassword/', changePassword),
+
     
 ]
 

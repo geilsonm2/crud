@@ -1,0 +1,11 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        Área Restrita
+        Bem vindo
+        <a href='/logouts/'>Sair</a>
+    {% else %}
+        Você não tem acesso a essa área!
+    {% endif %}
+{% endblock %}

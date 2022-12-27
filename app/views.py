@@ -1,14 +1,67 @@
 from django.shortcuts import render, redirect
 from app.forms import CursosForm
 from app.models import Cursos
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
-def cadastro(request):
-    return render(request, 'index.html')
+#CADASTRO E LOGIN
+def home(request): #Home / Index / Chamando MAIN
+    return render(request, 'painel.html') 
 
-def login(request):
-    return render(request, 'login.html')
 
+def create(request): #Formulário de Cadastro
+    return render(request, 'create.html')
+
+def store(request): #Inserção de dados dos Usuários ao Banco
+    data = {} #user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+    if (request.POST['password'] != request.POST['password-conf']):
+        data ['msg'] = 'Senha e confirmação de senha diferentes!'
+        data ['class'] = 'alert-danger'
+    else: 
+        user = User.objects.create_user(request.POST['name'],request.POST['email'],request.POST['password'])
+        user.first_name = request.POST['name']
+        user.save()
+        data ['msg'] = 'Usuário cadastrado com sucesso!'
+        data ['class'] = 'alert-success' 
+    return render(request, 'create.html', data)
+
+
+
+def painel(request): #Formulário painel do login
+    return render(request, 'painel.html')
+
+
+
+def dologin(request): #Formulário painel do login
+    data = {}
+    user = authenticate(username= request.POST['user'], password= request.POST['password'])
+    if user is not None:
+       login(request, user)
+       return redirect('/cursos/')
+    else:
+        data ['msg'] = 'Usuário ou senha Inválidos!'
+        data ['class'] = 'alert-primary'
+        return render(request, 'painel.html', data)
+
+
+def dashboard(request):
+    return render(request, 'dashboard/home.html')
+
+def logouts(request):
+    logout(request)
+    return redirect('/painel/')
+
+#Alterar Senha
+def changePassword(request):
+    user = User.objects.get(email=request.user.email)
+    user.set_password(request.POST['password'])
+    user.save()
+    logout(request)
+    return redirect('/painel/')
+
+
+#CADASTRO DE CURSOS
 def form(request):
    data= {}
    data['form'] = CursosForm()
@@ -19,7 +72,7 @@ def cursos(request):
     data['db'] = Cursos.objects.all()
     return render(request, 'cursos.html', data)
 
-def create(request):
+def createCursos(request):
     form = CursosForm(request.POST or None)
     if form.is_valid():
         form.save()
@@ -43,3 +96,7 @@ def delete (request, pk):
     db = Cursos.objects.get(pk=pk)
     db.delete()
     return redirect('cursos')
+
+
+
+

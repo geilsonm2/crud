@@ -76,8 +76,17 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'sistema', #ok
+        'PORT': '3306', #ok
+        'HOST': 'localhost', #ok
+        'USER': 'root', #ok
+        'PASSWORD': '', #ok
+        'OPTIONS': { #Trabalhar com banco de dados relacional
+            'init_command' : 'SET default_storage_engine=InnoDB' 
+        }, #ok
+
+
     }
 }
 
@@ -117,6 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIR = ('/static/')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static') #Static root com os.path.join chamando a base do diretorio e chamando 'static'
 
 # Default primary key field type
