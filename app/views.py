@@ -58,7 +58,7 @@ def changePassword(request):
     user.set_password(request.POST['password'])
     user.save()
     logout(request)
-    return redirect('/painel/')
+    return redirect('/changePassword/')
 
 
 #CADASTRO DE CURSOS

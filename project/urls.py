@@ -29,13 +29,12 @@ urlpatterns = [
 
     path('', home),
     path('create/', create, name='create'),
-    path('store/', store),
+    path('store/', store, name='store'),
     path('painel/', painel, name='painel'),
-    path('dologin/', dologin),
-    path('dashboard/', dashboard),
-    path('logouts/', logouts),
-    path('changePassword/', changePassword),
-
+    path('dologin/', dologin, name='dologin'),
+    path('dashboard/', dashboard, name='dashboard'),
+    path('logouts/', logouts, name='logouts'),
+    path('changePassword/', changePassword, name='changePassword'),
     
 ]
 
