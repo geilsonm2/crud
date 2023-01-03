@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from app.views import cursos, form, createCursos, edit, update, delete, home, create,store , painel, dologin, dashboard, logouts, changePassword
+from app.views import * 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,7 +34,8 @@ urlpatterns = [
     path('dologin/', dologin, name='dologin'),
     path('dashboard/', dashboard, name='dashboard'),
     path('logouts/', logouts, name='logouts'),
-    path('changePassword/', changePassword, name='changePassword'),
+    path('password/',password, name='password'),
+    path('changePassword/', changePassword, name='changePassword')
     
 ]
 

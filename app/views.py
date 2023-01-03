@@ -3,6 +3,7 @@ from app.forms import CursosForm
 from app.models import Cursos
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+
 # Create your views here.
 
 #CADASTRO E LOGIN
@@ -14,9 +15,25 @@ def create(request): #Formulário de Cadastro
     return render(request, 'create.html')
 
 def store(request): #Inserção de dados dos Usuários ao Banco
+    # campos = {
+    #     'name' : 'Preencha o campo nome',
+    #     'user' : 'Preencha o campo de usuário',
+    #     'password': 'Preencha o campo de senha',
+    #     'password-conf': 'Confirme a senha',
+    #     'email' : 'email'
+    # }
+
+    # for campo, msg in campos.items():
+    #     if campo not in request.POST or request.POST[campo] == '':
+    #         data = {
+    #             'msg' : msg,
+    #             'class' : 'alert-danger'
+    #         }
+
+    #         return render(request, 'create.html', data)
     data = {} #user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
     if (request.POST['password'] != request.POST['password-conf']):
-        data ['msg'] = 'Senha e confirmação de senha diferentes!'
+        data ['msg'] = 'Senhas divergentes!'
         data ['class'] = 'alert-danger'
     else: 
         user = User.objects.create_user(request.POST['name'],request.POST['email'],request.POST['password'])
@@ -53,13 +70,20 @@ def logouts(request):
     return redirect('/painel/')
 
 #Alterar Senha
-def changePassword(request):
-    user = User.objects.get(email=request.user.email)
-    user.set_password(request.POST['password'])
-    user.save()
-    logout(request)
-    return redirect('/changePassword/')
+def password(request):
+    # user = User.objects.get(email=request.user.email)
+    # user.set_password('new password')
+    # user.save()
+    # logout(request)
+    return render(request, 'changePassword.html')
 
+def changePassword (request):
+     user = User.objects.get (email=request.POST['email'])
+     user.set_password(request.POST['password'])
+     user.save()
+     logout(request)
+     return redirect('/painel/')
+    
 
 #CADASTRO DE CURSOS
 def form(request):
